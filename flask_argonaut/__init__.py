@@ -10,7 +10,7 @@ from argon2 import argon2_hash
     :license: BSD, see LICENSE for more details.
 """
 
-__version_info__ = ('0', '1', '7')
+__version_info__ = ('0', '1', '8')
 __version__ = '.'.join(__version_info__)
 __author__ = 'Anton Oleynick'
 __license__ = 'BSD'
