@@ -8,7 +8,7 @@ from argon2 import argon2_hash
     :license: BSD, see LICENSE for more details.
 """
 
-__version__ = '0.2'
+__version__ = '0.21'
 __all__ = ['Argonaut', 'generate_salt', 'generate_hash', 'check_hash']
 
 
