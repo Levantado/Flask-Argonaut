@@ -5,9 +5,10 @@
 
 """
 from setuptools import setup
+from .flask_argonaut import __version_info__
 
 setup(name='Flask-Argonaut',
-      version='0.19',
+      version=__version_info__,
       description='Flask extension use hashing data with Argon2',
       author='Anton Oleynik',
       author_email='levantado@me.com',

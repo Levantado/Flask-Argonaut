@@ -1,20 +1,14 @@
+import os
 from argon2 import argon2_hash
 
 """
-    flaskext.argonaut
-    ---------------
-
     A Flask extension providing Argon2 hashing and comparison hash.
 
     :copyright: (c) 2017 by Anton Oleynick.
     :license: BSD, see LICENSE for more details.
 """
 
-__version_info__ = ('0', '1', '9')
-__version__ = '.'.join(__version_info__)
-__author__ = 'Anton Oleynick'
-__license__ = 'BSD'
-__copyright__ = '(c) 2017 by Anton Oleynick'
+__version_info__ = ('0', '2')
 __all__ = ['Argonaut', 'generate_salt', 'generate_hash', 'check_hash']
 
 
@@ -53,8 +47,7 @@ class Argonaut(object):
         Generation salt from urandom stream of system, default size of salt 20,
         :return: alphanumeric string of salt 20 char len
         """
-        with open('/dev/urandom', 'rb') as f:
-            return f.read(10).hex()
+        return os.urandom(10).hex()
 
     def generate_hash(self, data, salt=None, hashlen=None):
         """
@@ -88,7 +81,5 @@ class Argonaut(object):
         :param salt: salt using for make that hash
         :return: True or False
         """
-        h_d, _ = self.generate_hash(data, salt)
-        if hashed_data == h_d:
-            return True
-        return False
+        temp_hash, _ = self.generate_hash(data, salt)
+        return hashed_data == temp_hash

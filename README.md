@@ -7,10 +7,6 @@ Argon2 is a password-hashing function that summarizes the state of the art in th
 ## Installation
 
 Install the extension with one of the following commands:
-
-    $ easy_install flask-argonaut
-
-of alternatively if you have pip installed:
     
     $ pip install flask-argonaut
 
@@ -32,8 +28,8 @@ if you use factory method
 	argon = Argonaut()
 
 	def create_app():
-		app = Flask(__name__)
-		argon.init_app(app)
+	    app = Flask(__name__)
+        argon.init_app(app)
 
 ### Main functions
 Extension have three primary function.
