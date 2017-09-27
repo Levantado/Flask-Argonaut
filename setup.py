@@ -5,10 +5,15 @@
 
 """
 from setuptools import setup
-from .flask_argonaut import __version_info__
+import re, io
+
+__version__ = re.search(
+    r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]',  # It excludes inline comment too
+    io.open('flask_argonaut/__init__.py', encoding='utf_8_sig').read()
+    ).group(1)
 
 setup(name='Flask-Argonaut',
-      version=__version_info__,
+      version=__version__,
       description='Flask extension use hashing data with Argon2',
       author='Anton Oleynik',
       author_email='levantado@me.com',
