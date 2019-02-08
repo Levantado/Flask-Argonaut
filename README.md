@@ -45,9 +45,6 @@ Return as results generated salt with, salt 20 chars of len.
 
 Return generated hash with specific len if len not set, automaticaly set 254. Same if salt not specificate salt generate too. Minimal len of salt is 8 symbols.
 
-Salt may set in app with environment settings ARGON_SALT 
-
-	app.config['ARGON_SALT'] = 'SOME123SECRET987SALT'
 
 #### Checking hash
 

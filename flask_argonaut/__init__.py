@@ -9,21 +9,18 @@ from argon2 import argon2_hash
 """
 
 __version__ = '0.21'
-__all__ = ['Argonaut', 'generate_salt', 'generate_hash', 'check_hash']
 
 
 class Argonaut(object):
     def __init__(self, app=None):
-        self.salt = None
         if app is not None:
             self.init_app(app)
 
     def init_app(self, app):
-        """
-        Initalizes the application with the extension.
+        """Initializes the application with the extension.
         :param app: The Flask application object.
         """
-        self.salt = app.config.get('ARGON_SALT')
+        self.log_rounds = app.config.get('ARGON_LOG_ROUNDS', 12)
 
     @staticmethod
     def __checker(raw_data, type_check):
@@ -36,7 +33,8 @@ class Argonaut(object):
         """
         if type_check == 'len':
             if len(str(raw_data)) < 8:
-                raise ValueError('Too short Salt, minimal length salt is 8 chars')
+                raise ValueError('Too short Salt,'
+                                 ' minimal length salt is 8 chars')
         if type_check == 'empty':
             if not raw_data:
                 raise ValueError('Empty data import to hashing')
@@ -59,11 +57,8 @@ class Argonaut(object):
         :return:
         """
         self.__checker(data, 'empty')
-        if (not salt) and (not self.salt):
+        if not salt:
             salt = self.generate_salt()
-        elif self.salt:
-            self.__checker(self.salt, 'len')
-            salt = str(self.salt)
         elif salt:
             self.__checker(salt, 'len')
             salt = str(salt)
@@ -71,12 +66,12 @@ class Argonaut(object):
             hashlen = 127
         else:
             hashlen = hashlen // 2
-        return argon2_hash(data, salt, buflen=hashlen).hex(), salt
+        return argon2_hash(t=self.log_rounds,password=data,salt=salt, buflen=hashlen).hex(), salt
 
     def check_hash(self, hashed_data, data, salt):
         """
         Compare enter data with hashed_data, with using salt.
-        :param hashed_data: Hashed data like bluerprint for checking
+        :param hashed_data: Hashed data like blueprint for checking
         :param data: data what needed check
         :param salt: salt using for make that hash
         :return: True or False
